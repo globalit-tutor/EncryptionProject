@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Result</title>
+    <meta charset="utf-8" />
+    <title>Login OK</title>
 </head>
 <body>
-<h1>로그인 정보</h1>
-<p>아이디: {{ username }}</p>
-<p>비밀번호: {{ password }}</p>
-<hr>
-<p>시저암호화 결과: {{ caesar_encrypted }}</p>
+<h1>로그인 성공</h1>
 
+<p><b>아이디:</b> {{ member["username"] }}</p>
+<p><b>이름:</b> {{ member["name"] }}</p>
+<p><b>이메일:</b> {{ member["email"] }}</p>
+<p><b>가입일:</b> {{ member["regdate"] }}</p>
 
-<hr>
-{{ request.url }} <br/>
-{{ request.method }} <br/>
-{{ request.client.host }} <br/>
-{{ request.headers['content-type'] }} <br/>
-{{ request.headers['user-agent'] }} <br/>
-{% for key, val in form.items() %}
-    <span>{{ key }} : {{ val }}</span>
-{% endfor %}
-<br/>
-
+<hr />
+<a href="/list">회원목록</a>
 </body>
 </html>

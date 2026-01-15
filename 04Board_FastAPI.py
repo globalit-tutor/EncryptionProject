@@ -80,6 +80,35 @@ async def board_new(title: str = Form(...), username: str = Form(...), contents:
 
     return RedirectResponse(url="/board", status_code=303)
 
+# 게시판 본문글 처리
+@app.get("/board/{bdno}", response_class=HTMLResponse)
+async def board_detail(request: Request, bdno: int):
+    async with aiosqlite.connect(DB_NAME) as db:
+        # 조회수 증가
+        await db.execute("UPDATE board SET views = views + 1 WHERE bdno = ?", (bdno,))
+        await db.commit()
+
+        # 상세 조회
+        async with db.execute("SELECT * FROM board WHERE bdno = ?", (bdno,)) as cur:
+            result = await cur.fetchone()
+
+    if result is None:
+        return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+
+    board = {
+        "bdno": result[0],
+        "title": result[1],
+        "username": result[2],
+        "regdate": result[3],
+        "views": result[4],
+        "contents": result[5],
+    }
+
+    return templates.TemplateResponse("board_detail.html", {
+        "request": request,
+        "bd": board
+    })
+
 
 # 스크립트를 직접 실행할 때만 서버 실행
 if __name__ == "__main__":

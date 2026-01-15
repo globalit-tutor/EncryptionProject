@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Post Detail</title>
+</head>
+<body>
+<h1>게시글 상세</h1>
+
+<p><b>글번호</b> {{ bd["bdno"] }}</p>
+<p><b>제목</b> {{ bd["title"] }}</p>
+<p><b>작성자</b> {{ bd["username"] }}</p>
+<p><b>작성일</b> {{ bd["regdate"] }}</p>
+<p><b>조회수</b> {{ bd["views"] }}</p>
+
+<hr />
+<pre style="white-space: pre-wrap;">{{ bd["contents"] }}</pre>
+
+<hr />
+
+<a href="/board">목록</a> |
+<a href="/board/{{ bd['bdno'] }}/edit">수정</a>
+
+<form method="post" action="/board/{{ bd['bdno'] }}/delete" style="display:inline;">
+    <button type="submit" onclick="return confirm('정말 삭제할까요?');">삭제</button>
+</form>
+</body>
+</html>

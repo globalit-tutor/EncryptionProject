@@ -120,6 +120,42 @@ async def board_delete(bdno: int):
     return RedirectResponse(url="/board", status_code=303)
 
 
+# 게시글 수정하기 폼
+@app.get("/board/{bdno}/edit", response_class=HTMLResponse)
+async def board_edit_form(request: Request, bdno: int):
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT * FROM board WHERE bdno = ?", (bdno,)) as cur:
+            result = await cur.fetchone()
+
+    if result is None:
+        return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+
+    board = {
+        "bdno": result[0],
+        "title": result[1],
+        "username": result[2],
+        "regdate": result[3],
+        "views": result[4],
+        "contents": result[5],
+    }
+
+    return templates.TemplateResponse("board_edit.html", {
+        "request": request,
+        "bd": board
+    })
+
+
+# 게시글 수정하기 처리
+@app.post("/board/{bdno}/edit")
+async def board_edit(bdno: int, title: str = Form(...), contents: str = Form(...)):
+    async with aiosqlite.connect(DB_NAME) as db:
+        await db.execute("UPDATE board SET title = ?, contents = ? WHERE bdno = ?",
+                         (title, contents, bdno))
+        await db.commit()
+
+    return RedirectResponse(url=f"/board/{bdno}", status_code=303)
+
+
 # 스크립트를 직접 실행할 때만 서버 실행
 if __name__ == "__main__":
     import uvicorn

@@ -109,6 +109,16 @@ async def board_detail(request: Request, bdno: int):
         "bd": board
     })
 
+# 게시글 삭제하기
+@app.post("/board/{bdno}/delete")
+async def board_delete(bdno: int):
+    async with aiosqlite.connect(DB_NAME) as db:
+        await db.execute("DELETE FROM board WHERE bdno = ?", (bdno,))
+        await db.commit()
+
+    # 게시글 삭제 후 게시판 목록으로 전환
+    return RedirectResponse(url="/board", status_code=303)
+
 
 # 스크립트를 직접 실행할 때만 서버 실행
 if __name__ == "__main__":

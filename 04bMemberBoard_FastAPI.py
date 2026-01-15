@@ -225,7 +225,7 @@ async def member_list(request: Request):
 
 # 요청이 들어오면 로그인 폼을 보여줌
 @app.get("/login", response_class=HTMLResponse)
-def login_form(request: Request):
+async def login_form(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
 

@@ -3,8 +3,10 @@ from settings import templates, MemberDB_NAME
 from fastapi import Request, Form, APIRouter
 from fastapi.responses import HTMLResponse, RedirectResponse
 
+
 # member 라우트 설정
 router = APIRouter(prefix="/member", tags=["member"])
+
 
 # 요청이 들어오면 회원가입폼을 보여줌
 @router.get("/join", response_class=HTMLResponse)

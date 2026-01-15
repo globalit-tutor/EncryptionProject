@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Board List</title>
+</head>
+<body>
+<h1>게시판 목록</h1>
+
+<div>
+    <a href="/board/new">글쓰기</a> |
+    <a href="/list">회원목록(예제)</a>
+</div>
+
+<hr />
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+    <tr>
+        <th>글번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>등록일</th>
+        <th>조회수</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for bd in boards %}
+    <tr align="center">
+        <td width="50px">{{ bd["bdno"] }}</td>
+        <td width="200px" align="left"><a href="/board/{{ bd['bdno'] }}">{{ bd["title"] }}</a></td>
+        <td width="55px">{{ bd["username"] }}</td>
+        <td width="100px">{{ bd["regdate"] }}</td>
+        <td width="50px">{{ bd["views"] }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

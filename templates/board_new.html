@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>New Post</title>
+</head>
+<body>
+<h1>글쓰기</h1>
+
+<form method="post" action="/board/new">
+    <div>
+        <label>제목</label>
+        <input type="text" name="title" required style="width:400px;" />
+    </div>
+
+    <div>
+        <label>작성자</label>
+        <input type="text" name="username" required style="width:200px;" />
+    </div>
+
+    <div>
+        <label>본문</label>
+        <textarea name="contents" required rows="10" cols="80"></textarea>
+    </div>
+
+    <button type="submit">등록</button>
+</form>
+
+<hr />
+<a href="/board">목록으로</a>
+</body>
+</html>

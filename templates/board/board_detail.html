@@ -19,10 +19,14 @@
 <hr />
 
 <a href="/board/list">목록</a> |
+
+{% if session_user == bd["username"] %}
 <a href="/board/{{ bd['bdno'] }}/edit">수정</a>
 
 <form method="post" action="/board/{{ bd['bdno'] }}/delete" style="display:inline;">
     <button type="submit" onclick="return confirm('정말 삭제할까요?');">삭제</button>
 </form>
+{% endif %}
+
 </body>
 </html>

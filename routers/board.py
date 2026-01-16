@@ -30,7 +30,7 @@ async def board_list(request: Request):
     return templates.TemplateResponse("board/board_list.html", {
         "request": request,
         "boards": boards,
-        "user": request.session["user"]
+        "user": request.session.get("user") # session["user"]는 오류 발생!
     })
 
 # 게시판 글쓰기 폼

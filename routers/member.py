@@ -107,3 +107,11 @@ async def login(request: Request, username: str = Form(...), password: str = For
         "request": request,
         "member": member
     })
+
+
+# 로그아웃 처리
+@router.get("/logout")
+async def logout(request: Request):
+    request.session.clear()     # 세션변수 제거
+    return RedirectResponse(url="/member/login", status_code=303)
+

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>New SungJuk</title>
+</head>
+<body>
+<h1>성적 등록</h1>
+
+<!-- action 속성을 생략하면 현재 페이지의 URL로 폼을 submit 함 -->
+<!-- 만일, method 속성을 생략하면 get 방식으로 폼을 submit 함 -->
+<form method="post">
+    <div>
+        <label>이름</label>
+        <input type="text" name="name" required style="width:400px;" />
+    </div>
+
+    <div>
+        <label>국어</label>
+        <input type="number" name="kor" required style="width:200px;" />
+    </div>
+
+    <div>
+        <label>영어</label>
+        <input type="number" name="eng" required style="width:200px;" />
+    </div>
+
+    <div>
+        <label>수학</label>
+        <input type="number" name="mat" required style="width:200px;" />
+    </div>
+
+    <button type="submit">등록</button>
+</form>
+
+<hr />
+<a href="/sungjuk/list">목록으로</a>
+</body>
+</html>

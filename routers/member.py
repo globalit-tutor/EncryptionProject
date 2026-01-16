@@ -63,6 +63,10 @@ async def member_list(request: Request):
 # 요청이 들어오면 로그인 폼을 보여줌
 @router.get("/login", response_class=HTMLResponse)
 async def login_form(request: Request):
+    # 이미 로그인 상태면 /board/list로 이동
+    if request.session.get("user"):
+        return RedirectResponse(url="/board/list", status_code=303)
+
     return templates.TemplateResponse("member/login.html", {"request": request})
 
 

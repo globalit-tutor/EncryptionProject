@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>SungJuk Detail</title>
+</head>
+<body>
+<h1>성적데이터 상세</h1>
+
+<p><b>학생번호</b> {{ sj["sjno"] }}</p>
+<p><b>이름</b> {{ sj["name"] }}</p>
+<p><b>국어</b> {{ sj["kor"] }}</p>
+<p><b>영어</b> {{ sj["eng"] }}</p>
+<p><b>수학</b> {{ sj["mat"] }}</p>
+<p><b>총점</b> {{ sj["tot"] }}</p>
+<p><b>평균</b> {{ sj["avg"] | round(1) }}</p>
+<p><b>학점</b> {{ sj["grd"] }}</p>
+
+<a href="/sungjuk/list">목록</a> |
+<a href="/sungjuk/{{ sj['sjno'] }}/edit">수정</a>
+
+<form method="post" action="/sungjuk/{{ sj['sjno'] }}/delete" style="display:inline;">
+    <button type="submit" onclick="return confirm('정말 삭제할까요?');">삭제</button>
+</form>
+</body>
+</html>

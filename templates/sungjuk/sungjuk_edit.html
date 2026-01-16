@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <title>Edit SungJuk</title>
+</head>
+<body>
+<h1>성적데이터 수정</h1>
+
+<form method="post" action="/sungjuk/{{ sj['sjno'] }}/edit">
+    <div>
+        <label>학생번호</label><br/>
+        <input type="text" name="sjno" required style="width:400px;"
+               value="{{ sj['sjno'] }}" disabled />
+    </div>
+
+    <div>
+        <label>이름</label><br/>
+        <input type="text" name="name" required style="width:400px;"
+               value="{{ sj['name'] }}" disabled />
+    </div>
+
+    <div>
+        <label>국어</label><br/>
+        <input type="number" name="kor" required style="width:400px;"
+               value="{{ sj['kor'] }}" min="0" max="100" />
+    </div>
+
+    <div>
+        <label>영어</label><br/>
+        <input type="number" name="eng" required style="width:400px;"
+               value="{{ sj['eng'] }}" min="0" max="100" />
+    </div>
+
+    <div>
+        <label>수학</label><br/>
+        <input type="number" name="mat" required style="width:400px;"
+               value="{{ sj['mat'] }}" min="0" max="100" />
+    </div>
+
+    <button type="submit">수정 저장</button>
+</form>
+
+<hr />
+<a href="/sungjuk/{{ sj['sjno'] }}">상세로</a> |
+<a href="/sungjuk/list">목록으로</a>
+</body>
+</html>

@@ -94,13 +94,47 @@ async def sungjuk_delete(sjno: int):
 
 @router.get("/{sjno}/edit", response_class=HTMLResponse)
 async def sungjuk_editform(request: Request, sjno: int):
-    pass
+    async with aiosqlite.connect(SungJukDB_NAME) as db:
+        async with db.execute("SELECT * FROM sungjuk WHERE sjno = ?", (sjno,)) as cur:
+            result = await cur.fetchone()
+
+    if result is None:
+        return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+
+    sungjuk = {
+        "sjno": result[0],
+        "name": result[1],
+        "kor": result[2],
+        "eng": result[3],
+        "mat": result[4],
+        "tot": result[5],
+        "avg": result[6], #round(result[6], 1),
+        "grd": result[7],
+        "regdate": result[8]
+    }
+
+    return templates.TemplateResponse("sungjuk/sungjuk_edit.html", {
+        "request": request,
+        "sj": sungjuk
+    })
+
 
 
 @router.post("/{sjno}/edit", response_class=HTMLResponse)
 async def sungjuk_edit(request: Request, sjno: int,
     kor: int = Form(...), eng: int = Form(...), mat: int = Form(...)):
-    pass
+    # 총점, 평균, 학점 재계산
+    tot, avg, grd = compute_sungjuk(kor, eng, mat)
+
+    async with aiosqlite.connect(SungJukDB_NAME) as db:
+        await db.execute(
+            """UPDATE sungjuk SET kor = ?, eng = ?, mat = ?,
+            tot = ?, avg = ?, grd = ? WHERE sjno = ?""",
+            (kor, eng, mat, tot, avg, grd, sjno))
+        await db.commit()
+
+    return RedirectResponse(url=f"/sungjuk/{sjno}", status_code=303)
+
 
 
 def compute_sungjuk(kor, eng, mat):

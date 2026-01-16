@@ -29,7 +29,8 @@ async def board_list(request: Request):
 
     return templates.TemplateResponse("board/board_list.html", {
         "request": request,
-        "boards": boards
+        "boards": boards,
+        "user": request.session["user"]
     })
 
 # 게시판 글쓰기 폼

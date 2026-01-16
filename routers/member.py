@@ -81,6 +81,12 @@ async def login(request: Request, username: str = Form(...), password: str = For
             "error": "아이디 또는 비밀번호가 올바르지 않습니다."
         })
 
+    # 세션에 저장(필요한 최소 정보만)
+    request.session["user"] = {
+        "username": member[0],
+        "name": member[1]
+    }
+
     # 조회한 데이터를 JSON형식으로 생성
     member = {
         "username": member[0],

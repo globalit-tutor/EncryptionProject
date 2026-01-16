@@ -81,9 +81,15 @@ async def sungjuk_detail(request: Request, sjno: int):
     })
 
 
-@router.get("/{sjno}/delete", response_class=HTMLResponse)
+# @router.get 으로 설정하는 경우, 405 Method not allow 오류 발생!!
+@router.post("/{sjno}/delete", response_class=HTMLResponse)
 async def sungjuk_delete(sjno: int):
-    pass
+    async with aiosqlite.connect(SungJukDB_NAME) as db:
+        await db.execute("DELETE FROM sungjuk WHERE sjno = ?", (sjno,))
+        await db.commit()
+
+    # 게시글 삭제 후 게시판 목록으로 전환
+    return RedirectResponse(url="/sungjuk/list", status_code=303)
 
 
 @router.get("/{sjno}/edit", response_class=HTMLResponse)

@@ -61,7 +61,8 @@ async def sungjuk_detail(request: Request, sjno: int):
             result = await cur.fetchone()
 
     if result is None:
-        return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+        #return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+        return RedirectResponse("/sungjuk/list", status_code=303)
 
     sungjuk = {
         "sjno": result[0],
@@ -99,7 +100,8 @@ async def sungjuk_editform(request: Request, sjno: int):
             result = await cur.fetchone()
 
     if result is None:
-        return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+        # return HTMLResponse("해당 글이 존재하지 않습니다.", status_code=404)
+        return RedirectResponse("/sungjuk/list", status_code=303)
 
     sungjuk = {
         "sjno": result[0],
